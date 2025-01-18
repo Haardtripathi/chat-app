@@ -2,6 +2,8 @@ const { response } = require("express")
 const User = require("../models/user.model")
 const Message = require("../models/message.model")
 const cloudinary = require("../lib/cloudinary")
+const { getReceiverSocketId } = require("../lib/socket")
+const { io } = require("../lib/socket")
 
 
 module.exports.getUsersForSidebar = async (req, res) => {
@@ -57,6 +59,10 @@ module.exports.sendMessage = async (req, res) => {
         await newMessage.save()
 
         //todo:realtime functinality goes here => sockey.io
+        const receiverSocketId = getReceiverSocketId(receiverId)
+        if (receiverSocketId) {
+            io.to(receiverSocketId).emit("newMessage", newMessage)
+        }
 
         res.status(201).json(newMessage)
 
