@@ -10,8 +10,6 @@ const path = require("path")
 
 
 const PORT = process.env.PORT
-const __dirname = path.resolve()
-
 app.use(express.json())
 app.use(cookieParser())
 
