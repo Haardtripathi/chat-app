@@ -1,6 +1,8 @@
 const { response } = require("express")
 const User = require("../models/user.model")
 const Message = require("../models/message.model")
+const cloudinary = require("../lib/cloudinary")
+
 
 module.exports.getUsersForSidebar = async (req, res) => {
     try {
@@ -22,7 +24,7 @@ module.exports.getMessages = async (req, res) => {
         const messages = await Message.find({
             $or: [
                 { senderId: myId, receiverId: userToChatId },
-                { senderId: myId, receiverId: userToChatId },
+                { senderId: userToChatId, receiverId: myId },
             ]
         })
 
@@ -41,7 +43,7 @@ module.exports.sendMessage = async (req, res) => {
 
         let imageUrl;
         if (image) {
-            const uploadResponse = await cloudinary.uploader.upload(profilePic)
+            const uploadResponse = await cloudinary.uploader.upload(image)
             imageUrl = uploadResponse.secure_url
         }
 
