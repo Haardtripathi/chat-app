@@ -38,22 +38,19 @@
 //         .catch((err) => console.error(err))
 // })
 
-import express from "express";
-import dotenv from "dotenv";
-import cookieParser from "cookie-parser";
-import { connectDB } from "./lib/db.js";
-import cors from "cors";
-import authRoutes from "./routes/auth.route.js";
-import messageRoutes from "./routes/message.route.js";
-import { app, io, server } from "./lib/socket.js";
-import path from "path";
-import { fileURLToPath } from "url";
-
-dotenv.config();
+const express = require("express");
+require("dotenv").config();
+const cookieParser = require("cookie-parser");
+const { connectDB } = require("./lib/db.js");
+const cors = require("cors");
+const authRoutes = require("./routes/auth.route.js");
+const messageRoutes = require("./routes/message.route.js");
+const { app, io, server } = require("./lib/socket.js");
+const path = require("path");
 
 const PORT = process.env.PORT;
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
+// Use the default `__dirname` provided by CommonJS
 app.use(express.json());
 app.use(cookieParser());
 
