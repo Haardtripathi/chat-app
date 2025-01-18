@@ -121,7 +121,7 @@ const MessageInput = () => {
     const fileInputRef = useRef < HTMLInputElement > (null);
     const { sendMessage } = useChatStore();
 
-    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleImageChange = (e) => {
         const file = e.target.files?.[0];
         if (!file) return;
         if (!file.type.startsWith("image/")) {
@@ -131,7 +131,7 @@ const MessageInput = () => {
 
         const reader = new FileReader();
         reader.onloadend = () => {
-            setImagePreview(reader.result as string);
+            setImagePreview(reader.result);
         };
         reader.readAsDataURL(file);
     };
@@ -159,7 +159,7 @@ const MessageInput = () => {
         }
     };
 
-    const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    const handleKeyDown = (e) => {
         if (e.key === 'Enter' && !e.shiftKey) {
             e.preventDefault();
             handleSendMessage();
